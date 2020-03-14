@@ -1,5 +1,6 @@
 package arm;
 
+import haxe.io.Bytes;
 import kha.graphics2.truetype.StbTruetype;
 import kha.Image;
 import kha.Font;
@@ -10,6 +11,7 @@ import zui.Nodes;
 import iron.Scene;
 import iron.data.Data;
 import iron.system.Input;
+import jsoni18n.I18n;
 import arm.ui.UITrait;
 import arm.ui.UINodes;
 import arm.ui.UIView2D;
@@ -62,6 +64,7 @@ class App {
 	public static var ELEMENT_H = 28;
 	public static var resHandle = new Handle({position: Res2048});
 	public static var bitsHandle = new Handle();
+	public static var i18n = new I18n();
 
 	public function new() {
 		Log.init();
@@ -71,6 +74,12 @@ class App {
 		#if arm_resizable
 		iron.App.onResize = onResize;
 		#end
+
+		// Load translation files
+		var i18nContents = Bytes.ofData(Krom.loadBlob("data/locale/_template.json")).toString();
+		i18n.loadFromString(i18nContents);
+		// Disable the translation depth system as we don't use it
+		i18n.depthDelimiter = "";
 
 		System.notifyOnDropFiles(function(filePath: String) {
 			var dropPath = filePath;
@@ -181,6 +190,12 @@ class App {
 		saveWindowRect();
 		if (save) Project.projectSave(true);
 		else System.stop();
+	}
+
+	// Helper method so external users can use `tr(...)` instead of `App.i18n.tr(...)`.
+	// `import arm.App.tr;` must be put at the top of the file for this to work.
+	public static function tr(id: String, ?vars: Map<String, Dynamic>): String {
+		return i18n.tr(id, vars);
 	}
 
 	public static function w(): Int {

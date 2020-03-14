@@ -8,3 +8,6 @@
 	path = Kromx
 	url = https://github.com/armory3d/Kromx
 	shallow = true
+[submodule "Libraries/jsoni18n"]
+	path = Libraries/jsoni18n
+	url = https://github.com/Calinou/jsoni18n

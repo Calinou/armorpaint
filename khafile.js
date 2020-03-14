@@ -5,8 +5,10 @@ let ios = false; // Temp
 project.addSources("Sources");
 project.addLibrary("iron");
 project.addLibrary("zui");
+project.addLibrary("jsoni18n");
 project.addShaders("Shaders/common/*.glsl", { noembed: false});
 project.addAssets("Assets/common/*", { notinlist: true, destination: "data/{name}" });
+project.addAssets("Assets/locale/*", { notinlist: true, destination: "data/locale/{name}" });
 project.addAssets("Assets/licenses/*", { notinlist: true, destination: "data/licenses/{name}" });
 project.addAssets("Assets/plugins/*", { notinlist: true, destination: "data/plugins/{name}" });
 project.addAssets("Assets/themes/*", { notinlist: true, destination: "data/themes/{name}" });
